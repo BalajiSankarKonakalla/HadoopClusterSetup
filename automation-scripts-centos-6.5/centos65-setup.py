@@ -3,8 +3,8 @@ import sys
 import os
 
 #PROPERTIES
-IPADDR = "10.132.3.125"
-HOSTNAME="twi.datalab.node3"
+IPADDR = sys.argv[1]
+HOSTNAME="twi.datalab."+sys.argv[2]
 NETMASK="255.255.252.0"
 GATEWAY="10.132.2.254"
 DNS1="10.10.1.1"
@@ -52,6 +52,7 @@ def configure_hosts():
 	templete = """127.0.0.1	localhost.localdomain localhost
 {IPADD}	{HN}	{HNS}
 ::1	localhost6.localdomain6 localhost6
+10.132.3.127    twi.datalab.node1    node1
 10.132.3.126    twi.datalab.node2    node2
 10.132.3.125    twi.datalab.node3    node3
 10.132.3.128    twi.datalab.node4    node4
@@ -78,7 +79,6 @@ def check_internet_connection():
 #STEP-5:
 def disable_se_linux():
 	path_to_selinux_conf = "/etc/selinux/config"
-	
 	data = open(path_to_selinux_conf,'r').read()
 	data_m = data.replace("SELINUX=enforcing","SELINUX=disabled")
 	ref_data = open(path_to_selinux_conf,'w')
