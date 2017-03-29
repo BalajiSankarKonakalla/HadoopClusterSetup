@@ -50,7 +50,6 @@ GATEWAY={GW}
 def configure_hosts():
 	path_to_hosts = "/etc/hosts"
 	templete = """127.0.0.1	localhost.localdomain localhost
-{IPADD}	{HN}	{HNS}
 ::1	localhost6.localdomain6 localhost6
 10.132.3.125    twi.datalab.node1    node1
 10.132.3.126    twi.datalab.node2    node2
@@ -58,9 +57,7 @@ def configure_hosts():
 10.132.3.128    twi.datalab.node4    node4
 """
 	hosts = open(path_to_hosts,"w")
-	hosts.write(templete.format(IPADD = IPADDR,
-								HN = HOSTNAME,
-								HNS = HOSTNAME.split(".")[-1]))
+	hosts.write(templete)
 	hosts.close()
 
 #STEP-4:
