@@ -119,6 +119,7 @@ def start_ntp_server():
 def stop_iptables():
 	os.system("iptables -F")
 	os.system("chkconfig iptables off")
+	os.system("service network resart")
 
 #STEP-11:
 def swappiness():
