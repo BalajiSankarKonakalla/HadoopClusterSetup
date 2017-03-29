@@ -42,7 +42,7 @@ NETWORKING_IPV6=no
 HOSTNAME={HN}
 GATEWAY={GW}
 """
-	network = open("/Users/balajisk/toDelete","w")
+	network = open(path_to_network,"w")
 	network.write(templete.format(HN = HOSTNAME, GW = GATEWAY))
 	network.close()
 
