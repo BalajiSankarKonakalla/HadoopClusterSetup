@@ -3,8 +3,8 @@ import sys
 import os
 
 #PROPERTIES
-IPADDR = "10.132.3.125"
-HOSTNAME="twi.datalab.node3"
+IPADDR = sys.argv[1]
+HOSTNAME="twi.datalab."+sys.argv[2]
 NETMASK="255.255.252.0"
 GATEWAY="10.132.2.254"
 DNS1="10.10.1.1"
@@ -42,7 +42,7 @@ NETWORKING_IPV6=no
 HOSTNAME={HN}
 GATEWAY={GW}
 """
-	network = open("/Users/balajisk/toDelete","w")
+	network = open(path_to_network,"w")
 	network.write(templete.format(HN = HOSTNAME, GW = GATEWAY))
 	network.close()
 
@@ -50,16 +50,14 @@ GATEWAY={GW}
 def configure_hosts():
 	path_to_hosts = "/etc/hosts"
 	templete = """127.0.0.1	localhost.localdomain localhost
-{IPADD}	{HN}	{HNS}
 ::1	localhost6.localdomain6 localhost6
+10.132.3.125    twi.datalab.node1    node1
 10.132.3.126    twi.datalab.node2    node2
-10.132.3.125    twi.datalab.node3    node3
+10.132.3.127    twi.datalab.node3    node3
 10.132.3.128    twi.datalab.node4    node4
 """
 	hosts = open(path_to_hosts,"w")
-	hosts.write(templete.format(IPADD = IPADDR,
-								HN = HOSTNAME,
-								HNS = HOSTNAME.split(".")[-1]))
+	hosts.write(templete)
 	hosts.close()
 
 #STEP-4:
@@ -78,7 +76,6 @@ def check_internet_connection():
 #STEP-5:
 def disable_se_linux():
 	path_to_selinux_conf = "/etc/selinux/config"
-	
 	data = open(path_to_selinux_conf,'r').read()
 	data_m = data.replace("SELINUX=enforcing","SELINUX=disabled")
 	ref_data = open(path_to_selinux_conf,'w')
@@ -119,6 +116,7 @@ def start_ntp_server():
 def stop_iptables():
 	os.system("iptables -F")
 	os.system("chkconfig iptables off")
+	os.system("service network resart")
 
 #STEP-11:
 def swappiness():
